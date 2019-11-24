@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="wx-mall-biz" />
+        <module name="wx-mall-common" />
+        <module name="wx-mall-domain" />
+        <module name="wx-mall-service" />
+        <module name="wx-mall-task" />
+        <module name="wx-mall-web" />
+        <module name="wx-mall-wx" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="wx-mall" target="1.5" />
+      <module name="wx-mall-biz" target="1.8" />
+      <module name="wx-mall-common" target="1.8" />
+      <module name="wx-mall-domain" target="1.8" />
+      <module name="wx-mall-service" target="1.8" />
+      <module name="wx-mall-task" target="1.8" />
+      <module name="wx-mall-web" target="1.8" />
+      <module name="wx-mall-wx" target="1.8" />
+      <module name="wxmall" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
