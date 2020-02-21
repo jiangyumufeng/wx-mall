@@ -10,6 +10,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>wx-mall-common</module>
+        <module>wx-mall-admin</module>
+        <module>wx-mall-admin-api</module>
         <module>wx-mall-web</module>
         <module>wx-mall-biz</module>
         <module>wx-mall-domain</module>
