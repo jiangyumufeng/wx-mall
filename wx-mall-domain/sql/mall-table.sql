@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `mall_ad`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_ad` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(63) NOT NULL DEFAULT '' COMMENT '广告标题',
   `link` varchar(255) NOT NULL DEFAULT '' COMMENT '所广告的商品页面或者活动页面链接地址',
   `url` varchar(255) NOT NULL COMMENT '广告宣传图片',
@@ -48,7 +48,7 @@ DROP TABLE IF EXISTS `mall_address`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_address` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(63) NOT NULL DEFAULT '' COMMENT '收货人名称',
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户表的用户ID',
   `province` varchar(63) NOT NULL COMMENT '行政区域表的省ID',
@@ -75,7 +75,7 @@ DROP TABLE IF EXISTS `mall_admin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_admin` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `username` varchar(63) NOT NULL DEFAULT '' COMMENT '管理员名称',
   `password` varchar(63) NOT NULL DEFAULT '' COMMENT '管理员密码',
   `last_login_ip` varchar(63) DEFAULT '' COMMENT '最近一次登录IP地址',
@@ -97,12 +97,15 @@ DROP TABLE IF EXISTS `mall_brand`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_brand` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '品牌商名称',
   `desc` varchar(255) NOT NULL DEFAULT '' COMMENT '品牌商简介',
   `pic_url` varchar(255) NOT NULL DEFAULT '' COMMENT '品牌商页的品牌商图片',
-  `sort_order` tinyint(3) DEFAULT '50',
+  `sort_order` tinyint(3) DEFAULT '50' COMMENT '品牌排序号',
   `floor_price` decimal(10,2) DEFAULT '0.00' COMMENT '品牌商的商品低价，仅用于页面展示',
+  `logo` varchar(255) DEFAULT NULL COMMENT '品牌logo',
+  `big_pic` varchar(255) DEFAULT NULL COMMENT '专区大图',
+  `brand_story` text COMMENT '品牌故事',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
@@ -118,7 +121,7 @@ DROP TABLE IF EXISTS `mall_cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_cart` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL COMMENT '用户表的用户ID',
   `goods_id` int(11) DEFAULT NULL COMMENT '商品表的商品ID',
   `goods_sn` char(32) DEFAULT NULL COMMENT '商品编号',
@@ -144,7 +147,7 @@ DROP TABLE IF EXISTS `mall_category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_category` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(63) NOT NULL DEFAULT '' COMMENT '类目名称',
   `keywords` varchar(1023) NOT NULL DEFAULT '' COMMENT '类目关键字，以JSON数组格式',
   `desc` varchar(255) DEFAULT '' COMMENT '类目广告语介绍',
@@ -169,7 +172,7 @@ DROP TABLE IF EXISTS `mall_collect`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_collect` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户表的用户ID',
   `value_id` int(11) NOT NULL DEFAULT '0' COMMENT '如果type=0，则是商品ID；如果type=1，则是专题ID',
   `type` tinyint(3) NOT NULL DEFAULT '0' COMMENT '收藏类型，如果type=0，则是商品ID；如果type=1，则是专题ID',
@@ -190,14 +193,19 @@ DROP TABLE IF EXISTS `mall_comment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_comment` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `goods_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '浏览商品ID',
   `value_id` int(11) NOT NULL DEFAULT '0' COMMENT '如果type=0，则是商品评论；如果是type=1，则是专题评论。',
   `type` tinyint(3) NOT NULL DEFAULT '0' COMMENT '评论类型，如果type=0，则是商品评论；如果是type=1，则是专题评论；如果type=3，则是订单商品评论。',
   `content` varchar(1023) NOT NULL COMMENT '评论内容',
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户表的用户ID',
+  `user_nickname` varchar(63) NOT NULL DEFAULT '' COMMENT '用户昵称或网络名称',
+  `user_icon` varchar(255) DEFAULT NULL COMMENT '评论用户头像',
   `has_picture` tinyint(1) DEFAULT '0' COMMENT '是否含有图片',
   `pic_urls` varchar(1023) DEFAULT NULL COMMENT '图片地址列表，采用JSON数组格式',
   `star` smallint(6) DEFAULT '1' COMMENT '评分， 1-5',
+  `member_ip` varchar(64) DEFAULT NULL COMMENT '评价的ip',
+  `is_show` tinyint(1) DEFAULT '0' COMMENT '是否展示，0-不展示，1-展示',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
@@ -214,7 +222,7 @@ DROP TABLE IF EXISTS `mall_coupon`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_coupon` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(63) NOT NULL COMMENT '优惠券名称',
   `desc` varchar(127) DEFAULT '' COMMENT '优惠券介绍，通常是显示优惠券使用限制文字',
   `tag` varchar(63) DEFAULT '' COMMENT '优惠券标签，例如新人专用',
@@ -246,7 +254,7 @@ DROP TABLE IF EXISTS `mall_coupon_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_coupon_user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL COMMENT '用户ID',
   `coupon_id` int(11) NOT NULL COMMENT '优惠券ID',
   `status` smallint(6) DEFAULT '0' COMMENT '使用状态, 如果是0则未使用；如果是1则已使用；如果是2则已过期；如果是3则已经下架；',
@@ -269,7 +277,7 @@ DROP TABLE IF EXISTS `mall_feedback`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_feedback` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户表的用户ID',
   `username` varchar(63) NOT NULL DEFAULT '' COMMENT '用户名称',
   `mobile` varchar(20) NOT NULL DEFAULT '' COMMENT '手机号',
@@ -294,9 +302,9 @@ DROP TABLE IF EXISTS `mall_footprint`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_footprint` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户表的用户ID',
-  `goods_id` int(11) NOT NULL DEFAULT '0' COMMENT '浏览商品ID',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户表的用户ID',
+  `goods_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '浏览商品ID',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
@@ -312,7 +320,7 @@ DROP TABLE IF EXISTS `mall_goods`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_goods` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `goods_sn` char(32) NOT NULL DEFAULT '' COMMENT '商品编号',
   `name` varchar(127) NOT NULL DEFAULT '' COMMENT '商品名称',
   `category_id` int(11) DEFAULT '0' COMMENT '商品所属类目ID',
@@ -350,7 +358,7 @@ DROP TABLE IF EXISTS `mall_goods_attribute`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_goods_attribute` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品表的商品ID',
   `attribute` varchar(255) NOT NULL COMMENT '商品参数名称',
   `value` varchar(255) NOT NULL COMMENT '商品参数值',
@@ -370,7 +378,7 @@ DROP TABLE IF EXISTS `mall_goods_product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_goods_product` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品表的商品ID',
   `specifications` varchar(1023) NOT NULL COMMENT '商品规格值列表，采用JSON数组格式',
   `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品货品价格',
@@ -391,7 +399,7 @@ DROP TABLE IF EXISTS `mall_goods_specification`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_goods_specification` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品表的商品ID',
   `specification` varchar(255) NOT NULL DEFAULT '' COMMENT '商品规格名称',
   `value` varchar(255) NOT NULL DEFAULT '' COMMENT '商品规格值',
@@ -412,7 +420,7 @@ DROP TABLE IF EXISTS `mall_groupon`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_groupon` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL COMMENT '关联的订单ID',
   `groupon_id` int(11) DEFAULT '0' COMMENT '参与的团购ID，仅当user_type不是1',
   `rules_id` int(11) NOT NULL COMMENT '团购规则ID，关联mall_groupon_rules表ID字段',
@@ -435,7 +443,7 @@ DROP TABLE IF EXISTS `mall_groupon_rules`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_groupon_rules` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) NOT NULL COMMENT '商品表的商品ID',
   `goods_name` varchar(127) NOT NULL COMMENT '商品名称',
   `pic_url` varchar(255) DEFAULT NULL COMMENT '商品图片或者商品货品图片',
@@ -457,7 +465,7 @@ DROP TABLE IF EXISTS `mall_issue`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_issue` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `question` varchar(255) DEFAULT NULL COMMENT '问题标题',
   `answer` varchar(255) DEFAULT NULL COMMENT '问题答案',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
@@ -475,7 +483,7 @@ DROP TABLE IF EXISTS `mall_keyword`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_keyword` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `keyword` varchar(127) NOT NULL DEFAULT '' COMMENT '关键字',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '关键字的跳转链接',
   `is_hot` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否是热门关键字',
@@ -496,7 +504,7 @@ DROP TABLE IF EXISTS `mall_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_log` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `admin` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '管理员',
   `ip` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '管理员地址',
   `type` int(11) DEFAULT NULL COMMENT '操作分类',
@@ -522,7 +530,7 @@ CREATE TABLE `mall_order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL COMMENT '用户表的用户ID',
   `order_sn` varchar(63) NOT NULL COMMENT '订单编号',
-  `order_status` smallint(6) NOT NULL COMMENT '订单状态',
+  `order_status` smallint(6) NOT NULL COMMENT '订单状态，0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单',
   `consignee` varchar(63) NOT NULL COMMENT '收货人名称',
   `mobile` varchar(63) NOT NULL COMMENT '收货人手机号',
   `address` varchar(127) NOT NULL COMMENT '收货具体地址',
@@ -536,14 +544,20 @@ CREATE TABLE `mall_order` (
   `actual_price` decimal(10,2) NOT NULL COMMENT '实付费用， = order_price - integral_price',
   `pay_id` varchar(63) DEFAULT NULL COMMENT '微信付款编号',
   `pay_time` datetime DEFAULT NULL COMMENT '微信付款时间',
-  `ship_sn` varchar(63) DEFAULT NULL COMMENT '发货编号',
+  `ship_sn` varchar(63) DEFAULT NULL COMMENT '物流编号',
   `ship_channel` varchar(63) DEFAULT NULL COMMENT '发货快递公司',
-  `ship_time` datetime DEFAULT NULL COMMENT '发货开始时间',
+  `ship_time` datetime NOT NULL COMMENT '发货开始时间',
+  `auto_confirm_day` int(11) DEFAULT NULL COMMENT '自动确认时间（天）',
   `confirm_time` datetime DEFAULT NULL COMMENT '用户确认收货时间',
   `comments` smallint(6) DEFAULT '0' COMMENT '待评价订单商品数量',
+  `bill_type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '发票类型：0->不开发票；1->电子发票；2->纸质发票',
+  `bill_header` varchar(255) DEFAULT NULL COMMENT '发票抬头',
+  `bill_content` varchar(255) DEFAULT NULL COMMENT '发票内容',
+  `bill_receiver_phone` varchar(32) DEFAULT NULL COMMENT '收票人电话',
+  `bill_receiver_email` varchar(64) DEFAULT NULL COMMENT '收票人邮箱',
   `end_time` datetime DEFAULT NULL COMMENT '订单关闭时间',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表';
@@ -557,7 +571,7 @@ DROP TABLE IF EXISTS `mall_order_goods`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_order_goods` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL DEFAULT '0' COMMENT '订单表的订单ID',
   `goods_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品表的商品ID',
   `goods_name` varchar(127) NOT NULL DEFAULT '' COMMENT '商品名称',
@@ -585,7 +599,7 @@ DROP TABLE IF EXISTS `mall_permission`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_permission` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_id` int(11) DEFAULT NULL COMMENT '角色ID',
   `permission` varchar(63) DEFAULT NULL COMMENT '权限',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
@@ -603,7 +617,7 @@ DROP TABLE IF EXISTS `mall_region`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_region` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `pid` int(11) NOT NULL DEFAULT '0' COMMENT '行政区域父ID，例如区县的pid指向市，市的pid指向省，省的pid则是0',
   `name` varchar(120) NOT NULL DEFAULT '' COMMENT '行政区域名称',
   `type` tinyint(3) NOT NULL DEFAULT '0' COMMENT '行政区域类型，如如1则是省， 如果是2则是市，如果是3则是区县',
@@ -623,7 +637,7 @@ DROP TABLE IF EXISTS `mall_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_role` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(63) NOT NULL COMMENT '角色名称',
   `desc` varchar(1023) DEFAULT NULL COMMENT '角色描述',
   `is_enabled` tinyint(1) DEFAULT '1' COMMENT '是否启用',
@@ -643,7 +657,7 @@ DROP TABLE IF EXISTS `mall_search_history`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_search_history` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL COMMENT '用户表的用户ID',
   `keyword` varchar(63) NOT NULL COMMENT '搜索关键字',
   `from` varchar(63) NOT NULL DEFAULT '' COMMENT '搜索来源，如pc、wx、app',
@@ -662,7 +676,7 @@ DROP TABLE IF EXISTS `mall_storage`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_storage` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(63) NOT NULL COMMENT '文件的唯一索引',
   `name` varchar(255) NOT NULL COMMENT '文件名',
   `type` varchar(20) NOT NULL COMMENT '文件类型',
@@ -683,7 +697,7 @@ DROP TABLE IF EXISTS `mall_system`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_system` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key_name` varchar(255) NOT NULL COMMENT '系统配置名',
   `key_value` varchar(255) NOT NULL COMMENT '系统配置值',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
@@ -701,7 +715,7 @@ DROP TABLE IF EXISTS `mall_topic`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_topic` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '''' COMMENT '专题标题',
   `subtitle` varchar(255) DEFAULT '''' COMMENT '专题子标题',
   `content` text COMMENT '专题内容，富文本格式',
@@ -726,7 +740,7 @@ DROP TABLE IF EXISTS `mall_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `username` varchar(63) NOT NULL COMMENT '用户名称',
   `password` varchar(63) NOT NULL DEFAULT '' COMMENT '用户密码',
   `gender` tinyint(3) NOT NULL DEFAULT '0' COMMENT '性别：0 未知， 1男， 1 女',
@@ -756,7 +770,7 @@ DROP TABLE IF EXISTS `mall_user_formid`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_user_formid` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `formId` varchar(63) NOT NULL COMMENT '缓存的FormId',
   `isprepay` tinyint(1) NOT NULL COMMENT '是FormId还是prepayId',
   `useAmount` int(2) NOT NULL COMMENT '可用次数，fromId为1，prepay为3，用1次减1',
@@ -769,6 +783,17 @@ CREATE TABLE `mall_user_formid` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+DROP TABLE IF EXISTS `mall_order_operate_log`;
+CREATE TABLE `mall_order_operate_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `order_id` char(32) DEFAULT NULL COMMENT '订单id',
+  `operate_man` varchar(100) DEFAULT NULL COMMENT '操作人：用户；系统；后台管理员',
+  `create_time` datetime DEFAULT NULL COMMENT '操作时间',
+  `order_status` int(1) DEFAULT NULL COMMENT '订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单',
+  `note` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COMMENT='订单操作历史记录';
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
