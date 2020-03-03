@@ -33,7 +33,7 @@ CREATE TABLE `mall_ad` (
   `end_time` datetime DEFAULT NULL COMMENT '广告结束时间',
   `is_enabled` tinyint(1) DEFAULT '0' COMMENT '是否启动',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
- `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   KEY `is_enabled` (`is_enabled`)
@@ -60,7 +60,7 @@ CREATE TABLE `mall_address` (
   `phone_number` varchar(20) NOT NULL DEFAULT '' COMMENT '手机号码',
   `is_default` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否默认地址',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
@@ -82,7 +82,7 @@ CREATE TABLE `mall_admin` (
   `last_login_time` datetime DEFAULT NULL COMMENT '最近一次登录时间',
   `avatar` varchar(255) DEFAULT '''' COMMENT '头像图片',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   `role_ids` varchar(127) DEFAULT '[]' COMMENT '角色列表',
   PRIMARY KEY (`id`)
@@ -108,7 +108,7 @@ CREATE TABLE `mall_brand` (
   `brand_story` text COMMENT '品牌故事',
   `show_status` int(1) DEFAULT NULL COMMENT '展示状态,0->不展示，1->展示',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=88888 DEFAULT CHARSET=utf8mb4 COMMENT='品牌商表';
@@ -127,14 +127,13 @@ CREATE TABLE `mall_cart` (
   `goods_id` int(11) DEFAULT NULL COMMENT '商品表的商品ID',
   `goods_sn` char(32) DEFAULT NULL COMMENT '商品编号',
   `goods_name` varchar(127) DEFAULT NULL COMMENT '商品名称',
-  `product_id` int(11) DEFAULT NULL COMMENT '商品货品表的货品ID',
   `price` decimal(10,2) DEFAULT '0.00' COMMENT '商品货品的价格',
   `number` smallint(5) DEFAULT '0' COMMENT '商品货品的数量',
   `specifications` varchar(1023) DEFAULT NULL COMMENT '商品规格值列表，采用JSON数组格式',
   `checked` tinyint(1) DEFAULT '1' COMMENT '购物车中商品是否选择状态',
   `pic_url` varchar(255) DEFAULT NULL COMMENT '商品图片或者商品货品图片',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='购物车商品表';
@@ -158,7 +157,7 @@ CREATE TABLE `mall_category` (
   `level` varchar(255) DEFAULT 'L1',
   `sort_order` tinyint(3) DEFAULT '50' COMMENT '排序',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   KEY `parent_id` (`pid`)
@@ -178,7 +177,7 @@ CREATE TABLE `mall_collect` (
   `value_id` int(11) NOT NULL DEFAULT '0' COMMENT '如果type=0，则是商品ID；如果type=1，则是专题ID',
   `type` tinyint(3) NOT NULL DEFAULT '0' COMMENT '收藏类型，如果type=0，则是商品ID；如果type=1，则是专题ID',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
@@ -208,7 +207,7 @@ CREATE TABLE `mall_comment` (
   `member_ip` varchar(64) DEFAULT NULL COMMENT '评价的ip',
   `is_show` tinyint(1) DEFAULT '0' COMMENT '是否展示，0-不展示，1-展示',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   KEY `id_value` (`value_id`)
@@ -241,7 +240,7 @@ CREATE TABLE `mall_coupon` (
   `start_time` datetime DEFAULT NULL COMMENT '使用券开始时间',
   `end_time` datetime DEFAULT NULL COMMENT '使用券截至时间',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='优惠券信息及规则表';
@@ -264,7 +263,7 @@ CREATE TABLE `mall_coupon_user` (
   `end_time` datetime DEFAULT NULL COMMENT '有效期截至时间',
   `order_id` int(11) DEFAULT NULL COMMENT '订单ID',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='优惠券用户使用表';
@@ -288,7 +287,7 @@ CREATE TABLE `mall_feedback` (
   `has_picture` tinyint(1) DEFAULT '0' COMMENT '是否含有图片',
   `pic_urls` varchar(1023) DEFAULT NULL COMMENT '图片地址列表，采用JSON数组格式',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   KEY `id_value` (`status`)
@@ -307,7 +306,7 @@ CREATE TABLE `mall_footprint` (
   `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户表的用户ID',
   `goods_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '浏览商品ID',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户浏览足迹表';
@@ -324,8 +323,8 @@ CREATE TABLE `mall_goods` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `goods_sn` char(32) NOT NULL DEFAULT '' COMMENT '商品编号',
   `name` varchar(127) NOT NULL DEFAULT '' COMMENT '商品名称',
-  `product_category_id` bigint(20) DEFAULT NULL,
-  `product_attribute_category_id` bigint(20) DEFAULT NULL,
+  `goods_category_id` bigint(20) DEFAULT NULL,
+  `goods_attribute_category_id` bigint(20) DEFAULT NULL,
   `brand_id` int(11) DEFAULT '0' COMMENT '品牌ID',
   `gallery` varchar(2048) DEFAULT NULL COMMENT '商品宣传图片列表，采用JSON数组格式',
   `keywords` varchar(255) DEFAULT '' COMMENT '商品关键字，采用逗号间隔',
@@ -344,38 +343,16 @@ CREATE TABLE `mall_goods` (
   `gift_growth` int(11) DEFAULT '0' COMMENT '赠送的成长值',
   `gift_point` int(11) DEFAULT '0' COMMENT '赠送的积分',
   `sub_title` varchar(255) DEFAULT NULL COMMENT '副标题',
-  `description` text COMMENT '商品描述',
   `detail` text COMMENT '商品详细介绍，是富文本格式',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除,0->未删除；1->已删除',
   PRIMARY KEY (`id`),
   KEY `goods_sn` (`goods_sn`),
-  KEY `cat_id` (`category_id`),
+  KEY `cat_id` (`goods_attribute_category_id`),
   KEY `brand_id` (`brand_id`),
   KEY `sort_order` (`sort_order`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100000 DEFAULT CHARSET=utf8mb4 COMMENT='商品基本信息表';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `mall_goods_product`
---
-
-DROP TABLE IF EXISTS `mall_goods_product`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mall_goods_product` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `goods_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品表的商品ID',
-  `specifications` varchar(1023) NOT NULL COMMENT '商品规格值列表，采用JSON数组格式',
-  `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品货品价格',
-  `number` int(11) NOT NULL DEFAULT '0' COMMENT '商品货品数量',
-  `url` varchar(125) DEFAULT NULL COMMENT '商品货品图片',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
-  `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=251 DEFAULT CHARSET=utf8mb4 COMMENT='商品货品表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -387,7 +364,7 @@ DROP TABLE IF EXISTS `mall_goods_attribute`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mall_goods_attribute` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `product_attribute_category_id` bigint(20) DEFAULT NULL,
+  `goods_attribute_category_id` bigint(20) DEFAULT NULL,
   `name` varchar(64) DEFAULT NULL,
   `select_type` int(1) DEFAULT NULL COMMENT '属性选择类型：0->唯一；1->单选；2->多选',
   `input_type` int(1) DEFAULT NULL COMMENT '属性录入方式：0->手工录入；1->从列表中选取',
@@ -399,15 +376,15 @@ CREATE TABLE `mall_goods_attribute` (
   `hand_add_status` int(1) DEFAULT NULL COMMENT '是否支持手动新增；0->不支持；1->支持',
   `type` int(1) DEFAULT NULL COMMENT '属性的类型；0->规格；1->参数',
   PRIMARY KEY (`id`),
-  KEY `product_attribute_category_id` (`product_attribute_category_id`)
+  KEY `goods_attribute_category_id` (`goods_attribute_category_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=666 DEFAULT CHARSET=utf8mb4 COMMENT='商品参数表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 -- ----------------------------
--- Table structure for mall_product_attribute_category
+-- Table structure for mall_goods_attribute_category
 -- ----------------------------
-DROP TABLE IF EXISTS `mall_product_attribute_category`;
-CREATE TABLE `mall_product_attribute_category` (
+DROP TABLE IF EXISTS `mall_goods_attribute_category`;
+CREATE TABLE `mall_goods_attribute_category` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) DEFAULT NULL,
   `attribute_count` int(11) DEFAULT '0' COMMENT '属性数量',
@@ -416,29 +393,29 @@ CREATE TABLE `mall_product_attribute_category` (
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='产品属性分类表';
 
 -- ----------------------------
--- Table structure for mall_product_attribute_value
+-- Table structure for mall_goods_attribute_value
 -- ----------------------------
-DROP TABLE IF EXISTS `mall_product_attribute_value`;
-CREATE TABLE `mall_product_attribute_value` (
+DROP TABLE IF EXISTS `mall_goods_attribute_value`;
+CREATE TABLE `mall_goods_attribute_value` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `product_id` bigint(20) DEFAULT NULL,
-  `product_attribute_id` bigint(20) DEFAULT NULL,
+  `goods_id` bigint(20) DEFAULT NULL,
+  `goods_attribute_id` bigint(20) DEFAULT NULL,
   `value` varchar(64) DEFAULT NULL COMMENT '手动添加规格或参数的值，参数单值，规格有多个时以逗号隔开',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=228 DEFAULT CHARSET=utf8 COMMENT='存储产品参数信息的表';
 
 
 -- ----------------------------
--- Table structure for mall_product_category
+-- Table structure for mall_goods_category
 -- ----------------------------
-DROP TABLE IF EXISTS `mall_product_category`;
-CREATE TABLE `mall_product_category` (
+DROP TABLE IF EXISTS `mall_goods_category`;
+CREATE TABLE `mall_goods_category` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `parent_id` bigint(20) DEFAULT NULL COMMENT '上机分类的编号：0表示一级分类',
   `name` varchar(64) DEFAULT NULL,
   `level` int(1) DEFAULT NULL COMMENT '分类级别：0->1级；1->2级',
-  `product_count` int(11) DEFAULT NULL,
-  `product_unit` varchar(64) DEFAULT NULL,
+  `goods_count` int(11) DEFAULT NULL,
+  `goods_unit` varchar(64) DEFAULT NULL,
   `nav_status` int(1) DEFAULT NULL COMMENT '是否显示在导航栏：0->不显示；1->显示',
   `show_status` int(1) DEFAULT NULL COMMENT '显示状态：0->不显示；1->显示',
   `sort` int(11) DEFAULT NULL,
@@ -450,13 +427,13 @@ CREATE TABLE `mall_product_category` (
 
 
 -- ----------------------------
--- Table structure for mall_product_category_attribute_relation
+-- Table structure for mall_goods_category_attribute_relation
 -- ----------------------------
-DROP TABLE IF EXISTS `mall_product_category_attribute_relation`;
-CREATE TABLE `mall_product_category_attribute_relation` (
+DROP TABLE IF EXISTS `mall_goods_category_attribute_relation`;
+CREATE TABLE `mall_goods_category_attribute_relation` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `product_category_id` bigint(20) DEFAULT NULL,
-  `product_attribute_id` bigint(20) DEFAULT NULL,
+  `goods_category_id` bigint(20) DEFAULT NULL,
+  `goods_attribute_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='产品的分类和属性的关系表，用于设置分类筛选条件（只支持一级分类）';
 --
@@ -474,7 +451,7 @@ CREATE TABLE `mall_product_category_attribute_relation` (
 --   `user_id` int(11) NOT NULL COMMENT '用户ID',
 --   `creator_user_id` int(11) NOT NULL COMMENT '创建者ID',
 --   `create_time` datetime NOT NULL COMMENT '创建时间',
---   `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+--   `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
 --   `share_url` varchar(255) DEFAULT NULL COMMENT '团购分享图片地址',
 --   `payed` tinyint(1) NOT NULL COMMENT '是否已经支付',
 --   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
@@ -497,7 +474,7 @@ CREATE TABLE `mall_product_category_attribute_relation` (
 --   `discount` decimal(63,0) NOT NULL COMMENT '优惠金额',
 --   `discount_member` int(11) NOT NULL COMMENT '达到优惠条件的人数',
 --   `create_time` datetime NOT NULL COMMENT '创建时间',
---   `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+--   `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
 --   `expire_time` datetime DEFAULT NULL COMMENT '团购过期时间',
 --   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
 --   PRIMARY KEY (`id`) USING BTREE
@@ -516,7 +493,7 @@ CREATE TABLE `mall_issue` (
   `question` varchar(255) DEFAULT NULL COMMENT '问题标题',
   `answer` varchar(255) DEFAULT NULL COMMENT '问题答案',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='常见问题表';
@@ -537,7 +514,7 @@ CREATE TABLE `mall_keyword` (
   `is_default` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否是默认关键字',
   `sort_order` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='关键字表';
@@ -560,7 +537,7 @@ CREATE TABLE `mall_log` (
   `result` varchar(127) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '操作结果，或者成功消息，或者失败消息',
   `comment` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '补充信息',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='操作日志表';
@@ -622,14 +599,13 @@ CREATE TABLE `mall_order_goods` (
   `goods_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品表的商品ID',
   `goods_name` varchar(127) NOT NULL DEFAULT '' COMMENT '商品名称',
   `goods_sn` char(32) NOT NULL DEFAULT '' COMMENT '商品编号',
-  `product_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品货品表的货品ID',
   `number` smallint(5) NOT NULL DEFAULT '0' COMMENT '商品货品的购买数量',
   `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品货品的售价',
   `specifications` varchar(1023) NOT NULL COMMENT '商品货品的规格列表',
   `pic_url` varchar(255) NOT NULL DEFAULT '' COMMENT '商品货品图片或者商品图片',
   `comment` int(11) DEFAULT '0' COMMENT '订单商品评论，如果是-1，则超期不能评价；如果是0，则可以评价；如果其他值，则是comment表里面的评论ID。',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   KEY `order_id` (`order_id`),
@@ -660,7 +636,7 @@ CREATE TABLE `mall_order_return_apply` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `order_id` bigint(20) DEFAULT NULL COMMENT '订单id',
   `company_address_id` bigint(20) DEFAULT NULL COMMENT '收货地址表id',
-  `product_id` bigint(20) DEFAULT NULL COMMENT '退货商品id',
+  `goods_id` bigint(20) DEFAULT NULL COMMENT '退货商品id',
   `order_sn` varchar(64) DEFAULT NULL COMMENT '订单编号',
   `create_time` datetime DEFAULT NULL COMMENT '申请时间',
   `username` varchar(64) DEFAULT NULL COMMENT '会员用户名',
@@ -669,13 +645,13 @@ CREATE TABLE `mall_order_return_apply` (
   `return_phone` varchar(100) DEFAULT NULL COMMENT '退货人电话',
   `status` int(1) DEFAULT NULL COMMENT '申请状态：0->待处理；1->退货中；2->已完成；3->已拒绝',
   `handle_time` datetime DEFAULT NULL COMMENT '处理时间',
-  `product_pic` varchar(500) DEFAULT NULL COMMENT '商品图片',
-  `product_name` varchar(200) DEFAULT NULL COMMENT '商品名称',
-  `product_brand` varchar(200) DEFAULT NULL COMMENT '商品品牌',
-  `product_attr` varchar(500) DEFAULT NULL COMMENT '商品销售属性：颜色：红色；尺码：xl;',
-  `product_count` int(11) DEFAULT NULL COMMENT '退货数量',
-  `product_price` decimal(10,2) DEFAULT NULL COMMENT '商品单价',
-  `product_real_price` decimal(10,2) DEFAULT NULL COMMENT '商品实际支付单价',
+  `goods_pic` varchar(500) DEFAULT NULL COMMENT '商品图片',
+  `goods_name` varchar(200) DEFAULT NULL COMMENT '商品名称',
+  `goods_brand` varchar(200) DEFAULT NULL COMMENT '商品品牌',
+  `goods_attr` varchar(500) DEFAULT NULL COMMENT '商品销售属性：颜色：红色；尺码：xl;',
+  `goods_count` int(11) DEFAULT NULL COMMENT '退货数量',
+  `goods_price` decimal(10,2) DEFAULT NULL COMMENT '商品单价',
+  `goods_real_price` decimal(10,2) DEFAULT NULL COMMENT '商品实际支付单价',
   `reason` varchar(200) DEFAULT NULL COMMENT '原因',
   `description` varchar(500) DEFAULT NULL COMMENT '描述',
   `proof_pics` varchar(1000) DEFAULT NULL COMMENT '凭证图片，以逗号隔开',
@@ -714,7 +690,7 @@ CREATE TABLE `mall_permission` (
   `role_id` int(11) DEFAULT NULL COMMENT '角色ID',
   `permission` varchar(63) DEFAULT NULL COMMENT '权限',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COMMENT='权限表';
@@ -753,7 +729,7 @@ CREATE TABLE `mall_role` (
   `desc` varchar(1023) DEFAULT NULL COMMENT '角色描述',
   `is_enabled` tinyint(1) DEFAULT '1' COMMENT '是否启用',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
@@ -773,7 +749,7 @@ CREATE TABLE `mall_search_history` (
   `keyword` varchar(63) NOT NULL COMMENT '搜索关键字',
   `from` varchar(63) NOT NULL DEFAULT '' COMMENT '搜索来源，如pc、wx、app',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='搜索历史表';
@@ -794,7 +770,7 @@ CREATE TABLE `mall_storage` (
   `size` int(11) NOT NULL COMMENT '文件大小',
   `url` varchar(255) DEFAULT NULL COMMENT '文件访问链接',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件存储表';
@@ -812,7 +788,7 @@ CREATE TABLE `mall_system` (
   `key_name` varchar(255) NOT NULL COMMENT '系统配置名',
   `key_value` varchar(255) NOT NULL COMMENT '系统配置值',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='系统配置表';
@@ -836,7 +812,7 @@ CREATE TABLE `mall_topic` (
   `sort_order` int(11) DEFAULT '100' COMMENT '排序',
   `goods` varchar(1023) DEFAULT '' COMMENT '专题相关商品，采用JSON数组格式',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   KEY `topic_id` (`id`)
@@ -870,7 +846,7 @@ CREATE TABLE `mall_user` (
   `history_integration` int(11) DEFAULT NULL COMMENT '历史积分数量',
   `status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '0 可用, 1 禁用, 2 注销',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_name` (`username`)
@@ -893,7 +869,7 @@ CREATE TABLE `mall_user_formid` (
   `expire_time` datetime NOT NULL COMMENT '过期时间，腾讯规定为7天',
   `openId` varchar(63) NOT NULL COMMENT '微信登录openid',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) DEFAULT NULL COMMENT '更新时间',
+  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
