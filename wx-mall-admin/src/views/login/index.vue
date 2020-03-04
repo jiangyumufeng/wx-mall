@@ -21,10 +21,10 @@
                   placeholder="密码"
         />
       </el-form-item>
-      <el-checkbox
+<!--      <el-checkbox
         v-model="checked"
         class="rememberme"
-      >记住密码</el-checkbox>
+      >记住密码</el-checkbox>-->
       <el-form-item style="width:100%;">
         <el-button type="primary" style="width:100%;" @click="handleSubmit" :loading="logining">登录</el-button>
       </el-form-item>
@@ -35,25 +35,36 @@
 <script>
   export default {
     data(){
-      return {
-        logining: false,
-        myForm: {
-          username: '',
-          password: '',
-        },
-        myRule: {
-          username: [{required: true, message: '请输入账号', trigger: 'blur'}],
-          password: [{required: true, message: '请输入密码', trigger: 'blur'}]
-        },
-        checked: false
+    const validatePassword = (rule, value, callback) => {
+      if (value.length < 6) {
+        callback(new Error('管理员密码长度应大于6'))
+      } else {
+        callback()
       }
-    },
+    }
+    return {
+      logining: false,
+      myForm: {
+        username: 'admin123',
+        password: 'admin123'
+      },
+      myRule: {
+        username: [{ required: true, message: '管理员账户不允许为空', trigger: 'blur' }],
+        password: [
+          { required: true, message: '管理员密码不允许为空', trigger: 'blur' },
+          { validator: validatePassword, trigger: 'blur' }
+        ]
+      },
+      passwordType: 'password',
+      loading: false
+    }
+  },
     methods: {
       handleSubmit () {
         this.$refs.myForm.validate((valid) => {
           if (valid) {
             this.logining = true;
-            if (this.myForm.username === 'admin' && this.myForm.password === '123456') {
+            if (this.myForm.username === 'admin123' && this.myForm.password === 'admin123') {
               this.logining = false;
               sessionStorage.setItem('user', this.myForm.username);
               this.$router.push({path: '/'});
