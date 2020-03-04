@@ -139,30 +139,6 @@ CREATE TABLE `mall_cart` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='购物车商品表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `mall_category`
---
-
-DROP TABLE IF EXISTS `mall_category`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mall_category` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(63) NOT NULL DEFAULT '' COMMENT '类目名称',
-  `keywords` varchar(1023) NOT NULL DEFAULT '' COMMENT '类目关键字，以JSON数组格式',
-  `desc` varchar(255) DEFAULT '' COMMENT '类目广告语介绍',
-  `pid` int(11) NOT NULL DEFAULT '0' COMMENT '父类目ID',
-  `icon_url` varchar(255) DEFAULT '' COMMENT '类目图标',
-  `pic_url` varchar(255) DEFAULT '' COMMENT '类目图片',
-  `level` varchar(255) DEFAULT 'L1',
-  `sort_order` tinyint(3) DEFAULT '50' COMMENT '排序',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
-  `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
-  PRIMARY KEY (`id`),
-  KEY `parent_id` (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000000 DEFAULT CHARSET=utf8mb4 COMMENT='类目表';
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `mall_collect`
@@ -849,7 +825,7 @@ CREATE TABLE `mall_user` (
   `update_time` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `is_deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `user_name` (`username`)
+  UNIQUE KEY `user_name` (`username`),
   UNIQUE KEY `idx_phone` (`phone`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -900,7 +876,7 @@ CREATE TABLE `mall_order_operate_log` (
 -- Table structure for ums_member_login_log
 -- ----------------------------
 DROP TABLE IF EXISTS `mall_user_login_log`;
-CREATE TABLE `ums_member_login_log` (
+CREATE TABLE `mall_user_login_log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `member_id` bigint(20) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
