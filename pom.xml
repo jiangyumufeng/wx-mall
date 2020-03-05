@@ -6,11 +6,18 @@
 
     <groupId>com.jiangyf</groupId>
     <artifactId>wx-mall</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.1.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
     <modules>
         <module>wx-mall-common</module>
-        <module>wx-mall-admin</module>
         <module>wx-mall-admin-api</module>
         <module>wx-mall-web</module>
         <module>wx-mall-biz</module>
@@ -50,6 +57,11 @@
         <dependency>
             <groupId>com.jiangyf</groupId>
             <artifactId>wx-mall-task</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jiangyf</groupId>
+            <artifactId>wx-mall-admin-api</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -104,29 +116,11 @@
             <version>3.3.0</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.github.qcloudsms</groupId>-->
-            <!--<artifactId>qcloudsms</artifactId>-->
-            <!--<version>1.0.5</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>com.qcloud</groupId>-->
-            <!--<artifactId>cos_api</artifactId>-->
-            <!--<version>5.6.8</version>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
             <version>2.5.0</version>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>com.qiniu</groupId>-->
-            <!--<artifactId>qiniu-java-sdk</artifactId>-->
-            <!--<version>[7.2.0, 7.2.99]</version>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
